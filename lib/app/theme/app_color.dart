@@ -27,3 +27,5 @@ const Color global_palette_gray_900 = Color(0xff292929);
 
 const Color mobile_chickin_layer_0 = global_palette_gray_50;
 const Color mobile_chickin_layer_1 = white;
+
+const Color buttonColor = Color(0xffC8E6FF);

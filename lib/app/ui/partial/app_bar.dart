@@ -1,21 +1,20 @@
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-AppBar app_bar(
+AppBar appBar(
     {required String title,
     required String subtitle,
     required BuildContext context}) {
   return AppBar(
-    elevation: 0.8,
-    backgroundColor: mobile_chickin_layer_1,
+    surfaceTintColor: Colors.transparent,
+    backgroundColor: global_palette_gray_100,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back_ios),
+      icon: const Icon(Icons.arrow_back_ios),
       onPressed: () {
         if (Navigator.canPop(context)) Navigator.pop(context);
       },
     ),
     shadowColor: global_palette_gray_100,
-    toolbarHeight: 56.0,
     flexibleSpace: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,7 +25,7 @@ AppBar app_bar(
         ),
         Text(
           subtitle,
-          style: TextStyle(fontSize: 12.0),
+          style: const TextStyle(fontSize: 12.0),
         )
       ],
     ),
