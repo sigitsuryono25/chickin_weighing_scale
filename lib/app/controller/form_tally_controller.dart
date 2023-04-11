@@ -1,3 +1,4 @@
+import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
 import 'package:chickin_weighting_scale/app/data/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/database/config/app_database.dart';
 import 'package:chickin_weighting_scale/utils/utils.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 import '../database/model/barang_masuk.dart';
 import '../locator/locator.dart';
 
-class FormTallyController extends GetxController {
+class FormTallyController extends BaseController {
   List<BarangMasuk> listBarangMasuk = List<BarangMasuk>.empty(growable: true);
   final noController = TextEditingController();
   final ekorController = TextEditingController();
@@ -24,6 +25,9 @@ class FormTallyController extends GetxController {
     'Karkas Frozen 2.1-2.2kg',
     'Karkas Frozen 2.3-2.4kg',
   ];
+  RxBool on = false.obs;
+
+  void toggle() => on.value = on.value ? false : true;
 
   Future<Stream<List<BarangMasukEntity>>> getSavedData() async {
     await locator.isReady<AppDatabase>();
@@ -36,7 +40,7 @@ class FormTallyController extends GetxController {
     var barangMasuk = BarangMasuk();
     barangMasuk.id = int.tryParse(noController.text);
     barangMasuk.ekor = ekorController.text;
-    barangMasuk.iot = 1;
+    barangMasuk.iot = booleanToInt(on.value);
     barangMasuk.jenis = selectedJenis;
     barangMasuk.kg = bobotController.text;
     barangMasuk.tanggalProduksi = tanggalProduksiController.text;
@@ -46,7 +50,7 @@ class FormTallyController extends GetxController {
 
   _setLastNumber(AppDatabase db) async {
     var lastNumber = await db.allDao.getCountData();
-    if(lastNumber != null){
+    if (lastNumber != null) {
       noController.text = (lastNumber + 1).toString();
     }
   }
@@ -61,11 +65,14 @@ class FormTallyController extends GetxController {
         barangMasuk.ekor,
         barangMasuk.kg,
         barangMasuk.iot);
-    var insert = await db.allDao.insertBarangMasuk(barangEntity);
-    if (insert > 0) {
+    // var insert = await db.allDao.insertBarangMasuk(barangEntity);
+    var insertToOdoo = await networkUtil.sendDataIntoOdoo(barangEntity);
+    if (insertToOdoo.statusCode == 200) {
       Get.snackbar("", "Insert Data berhasil");
       _resetInput();
       getSavedData();
+    } else {
+      Get.snackbar("Kesalahan", insertToOdoo.body);
     }
   }
 

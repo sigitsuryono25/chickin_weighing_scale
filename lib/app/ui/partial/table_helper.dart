@@ -2,6 +2,7 @@ import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dar
 import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
   return DataTable2(
@@ -59,24 +60,27 @@ DataTable2 tableDetail(
       barang.length,
       (index) {
         return DataRow(
-          cells: [
-            DataCell(
-              Text((index + 1).toString()),
-            ),
-            DataCell(
-              Text(barang[index].tanggalProduksi.toString()),
-            ),
-            DataCell(
-              Text(barang[index].jenis.toString()),
-            ),
-            DataCell(
-              Text(barang[index].ekor.toString()),
-            ),
-            DataCell(
-              Text(barang[index].kg.toString()),
-            ),
-          ],
-        );
+            cells: [
+              DataCell(
+                Text((index + 1).toString()),
+              ),
+              DataCell(
+                Text(barang[index].tanggalProduksi.toString()),
+              ),
+              DataCell(
+                Text(barang[index].jenis.toString()),
+              ),
+              DataCell(
+                Text(barang[index].ekor.toString()),
+              ),
+              DataCell(
+                Text(barang[index].kg.toString()),
+              ),
+            ],
+            onLongPress: () {
+              Get.snackbar("Selected baris  ${index + 1}",
+                  "Selected Id ${barang[index].id}");
+            });
       },
     ),
   );

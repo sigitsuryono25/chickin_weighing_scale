@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:floor/floor.dart';
 
 @Entity(tableName: "tb_barang_masuk")
@@ -25,4 +27,17 @@ class BarangMasukEntity {
 
   BarangMasukEntity.noId(
       {this.jenis, this.tanggalProduksi, this.ekor, this.kg, this.iot});
+
+  Map<String, dynamic> toJson() {
+    var mapping = <String, dynamic>{
+      'id': id,
+      'jenis': jenis,
+      'tanggal_produksi': tanggalProduksi,
+      'ekor': ekor,
+      'bobot': kg,
+      'iot': iot
+    };
+    print(jsonEncode(mapping));
+    return mapping;
+  }
 }
