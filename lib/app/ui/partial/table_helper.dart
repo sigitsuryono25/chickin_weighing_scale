@@ -1,10 +1,9 @@
 import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
+import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
-import '../../controller/task_controller.dart';
-
-DataTable2 tableRingkasan(TaskController controller) {
+DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
   return DataTable2(
     columnSpacing: 12,
     horizontalMargin: 12,
@@ -19,20 +18,20 @@ DataTable2 tableRingkasan(TaskController controller) {
       DataColumn2(label: Text('Kg'), size: ColumnSize.L),
     ],
     rows: List<DataRow>.generate(
-      controller.listBarangMasuk.length,
+      barang.length,
       (index) => DataRow(
         cells: [
           DataCell(
-            Text(controller.listBarangMasuk[index].id.toString()),
+            Text(barang[index].id.toString()),
           ),
           DataCell(
-            Text(controller.listBarangMasuk[index].jenis.toString()),
+            Text(barang[index].jenis.toString()),
           ),
           DataCell(
-            Text(controller.listBarangMasuk[index].ekor.toString()),
+            Text(barang[index].ekor.toString()),
           ),
           DataCell(
-            Text(controller.listBarangMasuk[index].kg.toString()),
+            Text(barang[index].kg.toString()),
           ),
         ],
       ),
@@ -40,7 +39,8 @@ DataTable2 tableRingkasan(TaskController controller) {
   );
 }
 
-DataTable2 tableDetail(FormTallyController controller) {
+DataTable2 tableDetail(
+    List<BarangMasukEntity> barang, FormTallyController tallyController) {
   return DataTable2(
     columnSpacing: 12,
     horizontalMargin: 12,
@@ -56,26 +56,28 @@ DataTable2 tableDetail(FormTallyController controller) {
       DataColumn2(label: Text('Kg'), size: ColumnSize.L),
     ],
     rows: List<DataRow>.generate(
-      controller.listBarangMasuk.length,
-      (index) => DataRow(
-        cells: [
-          DataCell(
-            Text(controller.listBarangMasuk[index].id.toString()),
-          ),
-          DataCell(
-            Text(controller.listBarangMasuk[index].tanggalProduksi.toString()),
-          ),
-          DataCell(
-            Text(controller.listBarangMasuk[index].jenis.toString()),
-          ),
-          DataCell(
-            Text(controller.listBarangMasuk[index].ekor.toString()),
-          ),
-          DataCell(
-            Text(controller.listBarangMasuk[index].kg.toString()),
-          ),
-        ],
-      ),
+      barang.length,
+      (index) {
+        return DataRow(
+          cells: [
+            DataCell(
+              Text((index + 1).toString()),
+            ),
+            DataCell(
+              Text(barang[index].tanggalProduksi.toString()),
+            ),
+            DataCell(
+              Text(barang[index].jenis.toString()),
+            ),
+            DataCell(
+              Text(barang[index].ekor.toString()),
+            ),
+            DataCell(
+              Text(barang[index].kg.toString()),
+            ),
+          ],
+        );
+      },
     ),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
+import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +12,6 @@ import '../partial/table_helper.dart';
 class FormTallyPage extends GetView<FormTallyController> {
   FormTallyPage({super.key});
 
-  final controllers = Get.put(FormTallyController());
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,20 +22,31 @@ class FormTallyPage extends GetView<FormTallyController> {
             context: context),
         body: SingleChildScrollView(
           child: GetBuilder<FormTallyController>(
-            initState: (state) {
-              Get.find<FormTallyController>().initDummyData();
-            },
             builder: (tallyController) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 250,
-                      child: tallyController.listBarangMasuk.isEmpty
-                          ? const Center(child: Text("Belum ada Data"))
-                          : tableDetail(tallyController),
-                    ),
+                        height: 300,
+                        child: FutureBuilder<Stream<List<BarangMasukEntity>>>(
+                          future: tallyController.getSavedData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return StreamBuilder(
+                                  stream: snapshot.requireData,
+                                  builder: (_, ss) {
+                                    if (!ss.hasData) return Container();
+                                    final barang = ss.requireData;
+                                    return tableDetail(barang, tallyController);
+                                  });
+                            } else {
+                              return const Center(
+                                child: Text("Belum ada Data"),
+                              );
+                            }
+                          },
+                        )),
                     Column(
                       children: [
                         Container(
@@ -77,14 +77,17 @@ class FormTallyPage extends GetView<FormTallyController> {
                                       contentPadding:
                                           EdgeInsets.fromLTRB(0, 20, 8, 20),
                                       border: OutlineInputBorder()),
-                                  items: items.map<DropdownMenuItem<String>>(
-                                      (String value) {
+                                  items: tallyController.items
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(value),
                                     );
                                   }).toList(),
-                                  onChanged: (value) {})
+                                  onChanged: (value) {
+                                    tallyController.selectedJenis = value;
+                                  })
                             ],
                           ),
                         ),
@@ -160,7 +163,9 @@ class FormTallyPage extends GetView<FormTallyController> {
                           child: SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                tallyController.populateInput();
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: buttonColor,
                               ),

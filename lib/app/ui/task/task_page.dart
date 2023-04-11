@@ -1,4 +1,5 @@
 import 'package:chickin_weighting_scale/app/controller/task_controller.dart';
+import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
@@ -10,8 +11,6 @@ import '../partial/table_helper.dart';
 
 class TaskTimbangPage extends GetView<TaskController> {
   TaskTimbangPage({super.key});
-
-  var controllers = Get.put(TaskController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +29,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: GetBuilder<TaskController>(
-                    initState: (state) {
-                      Get.find<TaskController>().initDummyData();
-                    },
-                    builder: (_) {
+                    builder: (controller) {
                       return Column(
                         children: [
                           Container(
@@ -43,7 +39,8 @@ class TaskTimbangPage extends GetView<TaskController> {
                               children: [
                                 const Text("Waktu Kedatangan Kendaraan"),
                                 TextField(
-                                  controller: _.waktuKedatanganKendaraan,
+                                  controller:
+                                      controller.waktuKedatanganKendaraan,
                                   readOnly: true,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
@@ -59,7 +56,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                               children: [
                                 const Text("Suhu"),
                                 TextField(
-                                  controller: _.suhu,
+                                  controller: controller.suhu,
                                   readOnly: true,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
@@ -75,7 +72,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                               children: [
                                 const Text("Nomor Segel"),
                                 TextField(
-                                  controller: _.noSegel,
+                                  controller: controller.noSegel,
                                   readOnly: true,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
@@ -91,7 +88,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                               children: [
                                 const Text("Waktu Timbang"),
                                 TextField(
-                                  controller: _.waktuTimbang,
+                                  controller: controller.waktuTimbang,
                                   readOnly: true,
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
@@ -101,7 +98,8 @@ class TaskTimbangPage extends GetView<TaskController> {
                                             context,
                                             (dateTime) => {
                                                   if (dateTime != null)
-                                                    _.waktuTimbang.text =
+                                                    controller
+                                                            .waktuTimbang.text =
                                                         formattedDateTime(
                                                             dateTime)
                                                 });
@@ -120,7 +118,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                               children: [
                                 const Text("Wakeup Selesai Timbang"),
                                 TextField(
-                                  controller: _.waktuTimbangSelesai,
+                                  controller: controller.waktuTimbangSelesai,
                                   readOnly: true,
                                   decoration: InputDecoration(
                                     border: const OutlineInputBorder(),
@@ -131,7 +129,9 @@ class TaskTimbangPage extends GetView<TaskController> {
                                             context,
                                             (dateTime) => {
                                                   if (dateTime != null)
-                                                    _.waktuTimbangSelesai.text =
+                                                    controller
+                                                            .waktuTimbangSelesai
+                                                            .text =
                                                         formattedDateTime(
                                                             dateTime)
                                                 });
@@ -149,7 +149,23 @@ class TaskTimbangPage extends GetView<TaskController> {
                               const Text("Tabel Ringkasan"),
                               SizedBox(
                                 height: 300,
-                                child: tableRingkasan(_),
+                                child: FutureBuilder<
+                                    Stream<List<BarangMasukEntity>>>(
+                                  future: controller.getAllDataBarang(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return StreamBuilder(
+                                          stream: snapshot.requireData,
+                                          builder: (_, ss) {
+                                            if (!ss.hasData) return Container();
+                                            final barang = ss.requireData;
+                                            return tableRingkasan(barang);
+                                          });
+                                    } else {
+                                      return Container();
+                                    }
+                                  },
+                                ),
                               )
                             ],
                           )
