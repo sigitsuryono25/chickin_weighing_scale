@@ -10,7 +10,7 @@ class SplashController extends BaseController {
     Future.delayed(const Duration(seconds: 5)).then((value) {
       sharedPref().then((value) {
         if (value.containsKey(Constant.USERNAME)) {
-          Get.offAndToNamed(Routes.INITIAL);
+          Get.offAndToNamed(Routes.BLUETOOTH);
         } else {
           Get.offAndToNamed(Routes.LOGIN);
         }

@@ -6,4 +6,5 @@ abstract class Routes{
   static const FORM_TALLY = '/form-tally';
   static const LOGIN = '/login';
   static const SPLASH = '/splash';
+  static const BLUETOOTH = '/bluetooth';
 }
