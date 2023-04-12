@@ -1,10 +1,11 @@
 import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
 import 'package:chickin_weighting_scale/app/database/config/app_database.dart';
 import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
-import 'package:chickin_weighting_scale/app/locator/locator.dart';
 import 'package:chickin_weighting_scale/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../helper/locator.dart';
 
 class TaskController extends BaseController {
   final TextEditingController waktuTimbang =

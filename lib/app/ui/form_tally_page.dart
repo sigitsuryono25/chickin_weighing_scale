@@ -1,13 +1,14 @@
 import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
 import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
+import 'package:chickin_weighting_scale/utils/constant.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/utils.dart';
-import '../partial/app_bar.dart';
-import '../partial/table_helper.dart';
+import '../../utils/utils.dart';
+import 'partial/app_bar.dart';
+import 'partial/table_helper.dart';
 
 class FormTallyPage extends GetView<FormTallyController> {
   FormTallyPage({super.key});
@@ -27,29 +28,51 @@ class FormTallyPage extends GetView<FormTallyController> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 300,
-                      child: FutureBuilder<Stream<List<BarangMasukEntity>>>(
-                        future: tallyController.getSavedData(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return StreamBuilder(
-                                stream: snapshot.requireData,
-                                builder: (_, ss) {
-                                  if (!ss.hasData) return Container();
-                                  final barang = ss.requireData;
-                                  return tableDetail(barang, tallyController);
-                                });
-                          } else {
-                            return const Center(
-                              child: Text("Belum ada Data"),
-                            );
-                          }
-                        },
-                      ),
+                    FutureBuilder<Stream<List<BarangMasukEntity>>>(
+                      future: tallyController.getSavedData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return StreamBuilder(
+                            stream: snapshot.requireData,
+                            builder: (_, ss) {
+                              if (!ss.hasData) {
+                                return const Text("Belum ada Data");
+                              } else {
+                                final barang = ss.requireData;
+                                controller.hasData = barang.isNotEmpty;
+                                print(controller.hasData);
+                                if (barang.isEmpty) {
+                                  return const Text(
+                                    "Belum ada data",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22.0),
+                                  );
+                                } else {
+                                  return SizedBox(
+                                    height: 300,
+                                    child: tableDetail(barang, tallyController),
+                                  );
+                                }
+                              }
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "Belum ada Data",
+                            ),
+                          );
+                        }
+                      },
                     ),
-                    const Center(
-                      child: Text("Tekan dan tahan baris yang ingin diedit", style: TextStyle(color: Colors.red),),
+                    Center(
+                      child: controller.hasData
+                          ? const Text(
+                              "Tekan dan tahan baris yang ingin diedit",
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : Container(),
                     ),
                     Column(
                       children: [
@@ -149,8 +172,22 @@ class FormTallyPage extends GetView<FormTallyController> {
                                     width: 70,
                                     child: Obx(
                                       () => Switch(
-                                          onChanged: (val) =>
-                                              tallyController.toggle(),
+                                          onChanged: (val) {
+                                            tallyController.toggle();
+                                            tallyController.sharedPref().then(
+                                                  (value) => value.setBool(
+                                                      Constant
+                                                          .IS_AUTO_VALUE_BOBOT,
+                                                      tallyController.on.value),
+                                                );
+
+                                            tallyController.sharedPref().then(
+                                                  (value) => print(
+                                                    value.getBool(Constant
+                                                        .IS_AUTO_VALUE_BOBOT),
+                                                  ),
+                                                );
+                                          },
                                           value: tallyController.on.value),
                                     ),
                                   ),

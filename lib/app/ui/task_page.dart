@@ -6,8 +6,8 @@ import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/utils.dart';
-import '../partial/table_helper.dart';
+import '../../utils/utils.dart';
+import 'partial/table_helper.dart';
 
 class TaskTimbangPage extends GetView<TaskController> {
   TaskTimbangPage({super.key});
@@ -116,7 +116,7 @@ class TaskTimbangPage extends GetView<TaskController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("Wakeup Selesai Timbang"),
+                                const Text("Waktu Selesai Timbang"),
                                 TextField(
                                   controller: controller.waktuTimbangSelesai,
                                   readOnly: true,
