@@ -36,3 +36,11 @@ setSelectedDateToController(
     String selectedDate, TextEditingController controller) {
   controller.text = selectedDate;
 }
+
+int booleanToInt(bool value){
+  if(value){
+    return 1;
+  }else {
+    return 0;
+  }
+}
