@@ -23,7 +23,7 @@ DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
       (index) => DataRow(
         cells: [
           DataCell(
-            Text(barang[index].id.toString()),
+            Text((index + 1).toString()),
           ),
           DataCell(
             Text(barang[index].jenis.toString()),

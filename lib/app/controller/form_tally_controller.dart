@@ -1,12 +1,13 @@
 import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
 import 'package:chickin_weighting_scale/app/data/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/database/config/app_database.dart';
+import 'package:chickin_weighting_scale/utils/constant.dart';
 import 'package:chickin_weighting_scale/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../database/model/barang_masuk.dart';
-import '../locator/locator.dart';
+import '../helper/locator.dart';
 
 class FormTallyController extends BaseController {
   List<BarangMasuk> listBarangMasuk = List<BarangMasuk>.empty(growable: true);
@@ -26,6 +27,7 @@ class FormTallyController extends BaseController {
     'Karkas Frozen 2.3-2.4kg',
   ];
   RxBool on = false.obs;
+  bool hasData = false;
 
   void toggle() => on.value = on.value ? false : true;
 
@@ -65,14 +67,14 @@ class FormTallyController extends BaseController {
         barangMasuk.ekor,
         barangMasuk.kg,
         barangMasuk.iot);
-    // var insert = await db.allDao.insertBarangMasuk(barangEntity);
-    var insertToOdoo = await networkUtil.sendDataIntoOdoo(barangEntity);
-    if (insertToOdoo.statusCode == 200) {
+    var insert = await db.allDao.insertBarangMasuk(barangEntity);
+    // var insertToOdoo = await networkUtil.sendDataIntoOdoo(barangEntity);
+    if (insert > 0) {
       Get.snackbar("", "Insert Data berhasil");
       _resetInput();
       getSavedData();
     } else {
-      Get.snackbar("Kesalahan", insertToOdoo.body);
+      Get.snackbar("Kesalahan", "Gagal menyimpan data");
     }
   }
 
@@ -81,5 +83,12 @@ class FormTallyController extends BaseController {
     selectedJenis = "";
     bobotController.text = "";
     tanggalProduksiController.text = getCurrentDateTime(format: "dd/MM/yyyy");
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    sharedPref().then((value) =>
+        on.value = value.getBool(Constant.IS_AUTO_VALUE_BOBOT) ?? false);
   }
 }

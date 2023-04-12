@@ -4,4 +4,6 @@ abstract class Routes{
 
   static const INITIAL = '/';
   static const FORM_TALLY = '/form-tally';
+  static const LOGIN = '/login';
+  static const SPLASH = '/splash';
 }
