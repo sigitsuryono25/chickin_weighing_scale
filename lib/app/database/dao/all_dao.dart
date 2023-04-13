@@ -4,7 +4,7 @@ import 'package:floor/floor.dart';
 @dao
 abstract class AllDao {
   @Query("SELECT * FROM tb_barang_masuk ORDER BY id DESC")
-  Stream<List<BarangMasukEntity>> getAllBarangMasuk() ;
+  Stream<List<BarangMasukEntity>> getAllBarangMasuk();
 
   @Query("SELECT * FROM tb_barang WHERE id = :id")
   Future<List<BarangMasukEntity>> findBarangById(String id);
@@ -20,4 +20,7 @@ abstract class AllDao {
 
   @delete
   Future<int> deleteBarangMasuk(BarangMasukEntity barangMasukEntity);
+
+  @Update(onConflict: OnConflictStrategy.replace)
+  Future<int> updateBarangMasuk(BarangMasukEntity barangMasukEntity);
 }

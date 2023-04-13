@@ -14,9 +14,9 @@ dateTimePicker(BuildContext context, Function(DateTime? p1) callback,
   } else {
     DatePicker.showDatePicker(context, showTitleActions: true,
         onConfirm: (date) {
-          dateTime = date;
-          callback(dateTime);
-        });
+      dateTime = date;
+      callback(dateTime);
+    });
   }
 }
 
@@ -37,10 +37,14 @@ setSelectedDateToController(
   controller.text = selectedDate;
 }
 
-int booleanToInt(bool value){
-  if(value){
+int booleanToInt(bool value) {
+  if (value) {
     return 1;
-  }else {
+  } else {
     return 0;
   }
+}
+
+bool intToBoolean(int? value) {
+  return value == 1 ? true : false;
 }
