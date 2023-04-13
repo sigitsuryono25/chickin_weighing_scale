@@ -4,6 +4,7 @@ import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
@@ -11,7 +12,7 @@ import 'partial/table_helper.dart';
 
 class TaskTimbangPage extends GetView<TaskController> {
   TaskTimbangPage({super.key});
-
+  final globalKeyFab = GlobalKey<ExpandableFabState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -178,12 +179,40 @@ class TaskTimbangPage extends GetView<TaskController> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Get.toNamed(Routes.FORM_TALLY);
-          },
-          label: const Text("Form Tally"),
-          icon: const Icon(Icons.add),
+        floatingActionButtonLocation: ExpandableFab.location,
+        floatingActionButton: ExpandableFab(
+          child: const Icon(Icons.play_arrow_rounded),
+          key: globalKeyFab,
+          type: ExpandableFabType.up,
+          overlayStyle: ExpandableFabOverlayStyle(
+            color: global_palette_gray_700.withOpacity(0.5)
+          ),
+          children: [
+            FloatingActionButton.extended(
+              heroTag: "form-tally",
+              onPressed: () {
+                final state = globalKeyFab.currentState;
+                if(state?.isOpen == true){
+                  state?.toggle();
+                }
+                Get.toNamed(Routes.FORM_TALLY);
+              },
+              label: const Text("Form Tally"),
+              icon: const Icon(Icons.add),
+            ),
+            FloatingActionButton.extended(
+              heroTag: "add-device",
+              onPressed: () {
+                final state = globalKeyFab.currentState;
+                if(state?.isOpen == true){
+                  state?.toggle();
+                }
+              },
+              tooltip: "Add Bluetooth Device",
+              label: const Text("Add Device"),
+              icon: const Icon(Icons.search),
+            ),
+          ],
         ),
       ),
     );

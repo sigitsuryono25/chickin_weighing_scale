@@ -9,7 +9,7 @@ AppBar appBar(
     surfaceTintColor: Colors.transparent,
     backgroundColor: global_palette_gray_100,
     leading: IconButton(
-      icon: const Icon(Icons.arrow_back_ios),
+      icon: (Navigator.canPop(context)) ? const Icon(Icons.arrow_back_ios): const SizedBox(),
       onPressed: () {
         if (Navigator.canPop(context)) Navigator.pop(context);
       },

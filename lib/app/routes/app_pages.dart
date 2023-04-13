@@ -23,14 +23,14 @@ class AppPages {
       name: Routes.FORM_TALLY,
       page: () => FormTallyPage(),
       binding: FormTallyBinding(),
-      transition: Transition.leftToRightWithFade,
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: Routes.LOGIN,
       page: () => LoginPage(),
       binding: LoginBinding(),
-      transition: Transition.leftToRightWithFade,
+      transition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(

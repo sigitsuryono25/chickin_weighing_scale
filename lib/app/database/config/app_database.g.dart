@@ -116,6 +116,19 @@ class _$AllDao extends AllDao {
                   'iot': item.iot
                 },
             changeListener),
+        _barangMasukEntityUpdateAdapter = UpdateAdapter(
+            database,
+            'tb_barang_masuk',
+            ['id'],
+            (BarangMasukEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'jenis': item.jenis,
+                  'tanggal_produksi': item.tanggalProduksi,
+                  'ekor': item.ekor,
+                  'bobot': item.kg,
+                  'iot': item.iot
+                },
+            changeListener),
         _barangMasukEntityDeletionAdapter = DeletionAdapter(
             database,
             'tb_barang_masuk',
@@ -137,6 +150,8 @@ class _$AllDao extends AllDao {
   final QueryAdapter _queryAdapter;
 
   final InsertionAdapter<BarangMasukEntity> _barangMasukEntityInsertionAdapter;
+
+  final UpdateAdapter<BarangMasukEntity> _barangMasukEntityUpdateAdapter;
 
   final DeletionAdapter<BarangMasukEntity> _barangMasukEntityDeletionAdapter;
 
@@ -190,6 +205,12 @@ class _$AllDao extends AllDao {
   @override
   Future<int> insertBarangMasuk(BarangMasukEntity barangMasukEntity) {
     return _barangMasukEntityInsertionAdapter.insertAndReturnId(
+        barangMasukEntity, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> updateBarangMasuk(BarangMasukEntity barangMasukEntity) {
+    return _barangMasukEntityUpdateAdapter.updateAndReturnChangedRows(
         barangMasukEntity, OnConflictStrategy.replace);
   }
 
