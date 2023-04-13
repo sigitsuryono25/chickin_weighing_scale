@@ -5,11 +5,17 @@ import 'package:get/get.dart';
 class DialogHelper {
   static defaultDialogSingleAction(
       String title, String content, String actionText, VoidCallback? action) {
+    if (Get.isDialogOpen == true) {
+      Get.close(0);
+    }
     Get.defaultDialog(
-        title: title,
-        content: Text(content),
-        confirm: TextButton(
-            onPressed: () => action?.call(), child: Text(actionText)));
+      title: title,
+      content: Text(content),
+      confirm: TextButton(
+        onPressed: () => action?.call(),
+        child: Text(actionText),
+      ),
+    );
   }
 
   static defaultDialogConfirmCancel({
