@@ -1,9 +1,13 @@
+import 'package:chickin_weighting_scale/app/helper/file_helper.dart';
 import 'package:chickin_weighting_scale/app/helper/locator.dart';
+import 'package:chickin_weighting_scale/app/helper/logging.dart';
+import 'package:chickin_weighting_scale/app/helper/workmanager.dart';
 import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:chickin_weighting_scale/app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -17,6 +21,7 @@ void main() {
         Brightness.dark, // color of navigation controls
   ));
   setupLocator();
+  setupWorkManager();
   runApp(GetMaterialApp(
     color: global_palette_gray_100,
     debugShowCheckedModeBanner: false,
@@ -25,4 +30,18 @@ void main() {
     getPages: AppPages.pages,
     theme: appThemeData,
   ));
+}
+
+@pragma('vm:entry-point')
+void callbackDispatcher() async {
+  Workmanager().executeTask((taskName, inputData) {
+    FileHelper().writeToLog("${DateTime.now()}\t\t\t\t $taskName");
+    printError(message: taskName);
+    return Future.value(true);
+  });
+}
+
+void setupWorkManager() {
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  WorkManagerHelper.registerPeriodicTaskDemo();
 }
