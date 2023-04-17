@@ -49,9 +49,20 @@ class FormTallyPage extends GetView<FormTallyController> {
                                         fontSize: 22.0),
                                   );
                                 } else {
-                                  return SizedBox(
-                                    height: 300,
-                                    child: tableDetail(barang, tallyController),
+                                  return Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 300,
+                                        child: tableDetail(
+                                            barang, tallyController),
+                                      ),
+                                      const Center(
+                                        child: Text(
+                                          "Edit/Hapus, Tahan 1 Baris",
+                                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                                        ),
+                                      )
+                                    ],
                                   );
                                 }
                               }
@@ -65,14 +76,6 @@ class FormTallyPage extends GetView<FormTallyController> {
                           );
                         }
                       },
-                    ),
-                    Center(
-                      child: controller.hasData
-                          ? const Text(
-                              "Tekan dan tahan baris yang ingin diedit",
-                              style: TextStyle(color: Colors.red),
-                            )
-                          : Container(),
                     ),
                     Column(
                       children: [
@@ -98,23 +101,28 @@ class FormTallyPage extends GetView<FormTallyController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text("Jenis"),
-                              DropdownButtonFormField2(
-                                  hint: const Text("Pilih Jenis"),
-                                  decoration: const InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.fromLTRB(0, 20, 8, 20),
-                                      border: OutlineInputBorder()),
-                                  items: tallyController.items
-                                      .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    tallyController.selectedJenis = value;
-                                  })
+                              Obx(
+                                () => DropdownButtonFormField2(
+                                    value: controller.selectedJenis?.value == ""
+                                        ? controller.items[0]
+                                        : controller.selectedJenis?.value,
+                                    hint: const Text("Pilih Jenis"),
+                                    decoration: const InputDecoration(
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(0, 20, 8, 20),
+                                        border: OutlineInputBorder()),
+                                    items: tallyController.items
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      tallyController.selectedJenis?.value = value.toString();
+                                    }),
+                              )
                             ],
                           ),
                         ),

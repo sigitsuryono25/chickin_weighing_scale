@@ -1,8 +1,9 @@
 import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
 import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
+import 'package:chickin_weighting_scale/utils/dialog_helper.dart';
+import 'package:chickin_weighting_scale/utils/utils.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
   return DataTable2(
@@ -78,10 +79,32 @@ DataTable2 tableDetail(
               ),
             ],
             onLongPress: () {
-              Get.snackbar("Selected baris  ${index + 1}",
-                  "Selected Id ${barang[index].id}");
+              DialogHelper.defaultDialogConfirmCancel(
+                  title: "Konfirmasi",
+                  content: "Apa yang akan dilakukan?",
+                  rightActionText: "Edit Data",
+                  rightAction: () {
+                    setFormEdit(tallyController, barang, index);
+                  },
+                  leftActionText: "Hapus Data",
+                  changeRedLeftButton: true,
+                  leftAction: () {
+                    tallyController.deleteData(barang[index]);
+                  });
             });
       },
     ),
   );
+}
+
+setFormEdit(FormTallyController tallyController, List<BarangMasukEntity> barang,
+    int index) {
+  tallyController.isEdit.value = true;
+  tallyController.bobotController.text = barang[index].kg.toString();
+  tallyController.noController.text = (index + 1).toString();
+  tallyController.ekorController.text = barang[index].ekor.toString();
+  tallyController.tanggalProduksiController.text =
+      barang[index].tanggalProduksi.toString();
+  tallyController.selectedJenis?.value = barang[index].jenis.toString();
+  tallyController.on.value = intToBoolean(barang[index].iot);
 }

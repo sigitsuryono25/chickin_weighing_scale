@@ -16,7 +16,7 @@ class FormTallyController extends BaseController {
   final bobotController = TextEditingController();
   final tanggalProduksiController =
       TextEditingController(text: getCurrentDateTime(format: "dd/MM/yyyy"));
-  String? selectedJenis = "";
+  RxString? selectedJenis = RxString("");
   final List<String> items = [
     'Karkas Frozen 1.1-1.2kg',
     'Karkas Frozen 1.3-1.4kg',
@@ -28,6 +28,7 @@ class FormTallyController extends BaseController {
   ];
   RxBool on = false.obs;
   bool hasData = false;
+  RxBool isEdit = RxBool(false);
 
   void toggle() => on.value = on.value ? false : true;
 
@@ -43,11 +44,49 @@ class FormTallyController extends BaseController {
     barangMasuk.id = int.tryParse(noController.text);
     barangMasuk.ekor = ekorController.text;
     barangMasuk.iot = booleanToInt(on.value);
-    barangMasuk.jenis = selectedJenis;
+    barangMasuk.jenis = selectedJenis?.value.toString();
     barangMasuk.kg = bobotController.text;
     barangMasuk.tanggalProduksi = tanggalProduksiController.text;
 
-    _addData(barangMasuk);
+    if (!isEdit.value) {
+      _addData(barangMasuk);
+    } else {
+      _editData(barangMasuk);
+    }
+  }
+
+  _editData(BarangMasuk barangMasuk) async {
+    await locator.isReady<AppDatabase>();
+    var db = locator.get<AppDatabase>();
+    var barangEntity = BarangMasukEntity(
+        barangMasuk.id,
+        barangMasuk.jenis,
+        barangMasuk.tanggalProduksi,
+        barangMasuk.ekor,
+        barangMasuk.kg,
+        barangMasuk.iot);
+    var updateData = await db.allDao.updateBarangMasuk(barangEntity);
+    if (updateData > 0) {
+      Get.snackbar("Info", "Update data berhasil");
+      _resetInput();
+      getSavedData();
+      isEdit.value = false;
+    } else {
+      Get.snackbar("Kesalahan", "Gagal mengubah data");
+    }
+  }
+
+  deleteData(BarangMasukEntity barangMasukEntity) async {
+    await locator.isReady<AppDatabase>();
+    var db = locator.get<AppDatabase>();
+    var delete = await db.allDao.deleteBarangMasuk(barangMasukEntity);
+    if (delete > 0) {
+      Get.snackbar("Info", "Update data dihapus");
+      _resetInput();
+      getSavedData();
+    } else {
+      Get.snackbar("Kesalahan", "Gagal menghapus data");
+    }
   }
 
   _setLastNumber(AppDatabase db) async {
@@ -80,7 +119,7 @@ class FormTallyController extends BaseController {
 
   _resetInput() {
     ekorController.text = "";
-    selectedJenis = "";
+    selectedJenis?.value = "";
     bobotController.text = "";
     tanggalProduksiController.text = getCurrentDateTime(format: "dd/MM/yyyy");
   }
