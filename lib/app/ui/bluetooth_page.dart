@@ -15,7 +15,7 @@ class BluetoothPage extends GetView<BluetoothController> {
             return Column(
               children: [
                 StreamBuilder(
-                  stream: controller.startScan(),
+                  initialData: controller.listResult,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.requireData.isNotEmpty) {
@@ -39,7 +39,9 @@ class BluetoothPage extends GetView<BluetoothController> {
                         return const Center(child: CircularProgressIndicator());
                       }
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
                   },
                 ),

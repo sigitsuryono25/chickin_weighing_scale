@@ -36,7 +36,7 @@ void main() {
 void callbackDispatcher() async {
   Workmanager().executeTask((taskName, inputData) {
     FileHelper().writeToLog("${DateTime.now()}\t\t\t\t $taskName");
-    printError(message: taskName);
+    loggingError(message: taskName);
     return Future.value(true);
   });
 }

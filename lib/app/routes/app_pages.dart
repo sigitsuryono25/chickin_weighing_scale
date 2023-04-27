@@ -3,10 +3,12 @@ import 'package:chickin_weighting_scale/app/bindings/form_tally_binding.dart';
 import 'package:chickin_weighting_scale/app/bindings/login_binding.dart';
 import 'package:chickin_weighting_scale/app/bindings/splash_binding.dart';
 import 'package:chickin_weighting_scale/app/bindings/task_binding.dart';
+import 'package:chickin_weighting_scale/app/bindings/task_list_binding.dart';
 import 'package:chickin_weighting_scale/app/ui/bluetooth_page.dart';
 import 'package:chickin_weighting_scale/app/ui/form_tally_page.dart';
 import 'package:chickin_weighting_scale/app/ui/login_page.dart';
 import 'package:chickin_weighting_scale/app/ui/splash_page.dart';
+import 'package:chickin_weighting_scale/app/ui/task_list_page.dart';
 import 'package:chickin_weighting_scale/app/ui/task_page.dart';
 import 'package:get/get.dart';
 
@@ -44,6 +46,10 @@ class AppPages {
       name: Routes.BLUETOOTH,
       page: () => BluetoothPage(),
       binding: BluetoothBinding(),
-    )
+    ),
+    GetPage(
+        name: Routes.TASK_LIST,
+        page: () => TaskListPage(),
+        binding: TaskListBinding())
   ];
 }

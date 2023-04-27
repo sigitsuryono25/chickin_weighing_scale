@@ -19,7 +19,7 @@ class FormTallyPage extends GetView<FormTallyController> {
       child: Scaffold(
         appBar: appBar(
             title: "Form Tally",
-            subtitle: "INBOUND dari UNION ke ABF 1",
+            subtitle: "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
             context: context),
         body: SingleChildScrollView(
           child: GetBuilder<FormTallyController>(
@@ -59,7 +59,9 @@ class FormTallyPage extends GetView<FormTallyController> {
                                       const Center(
                                         child: Text(
                                           "Edit/Hapus, Tahan 1 Baris",
-                                          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       )
                                     ],
@@ -103,9 +105,9 @@ class FormTallyPage extends GetView<FormTallyController> {
                               const Text("Jenis"),
                               Obx(
                                 () => DropdownButtonFormField2(
-                                    value: controller.selectedJenis?.value == ""
+                                    value: controller.selectedJenis.value == ""
                                         ? controller.items[0]
-                                        : controller.selectedJenis?.value,
+                                        : controller.selectedJenis.value,
                                     hint: const Text("Pilih Jenis"),
                                     decoration: const InputDecoration(
                                         contentPadding:
@@ -120,7 +122,8 @@ class FormTallyPage extends GetView<FormTallyController> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      tallyController.selectedJenis?.value = value.toString();
+                                      tallyController.selectedJenis.value =
+                                          value.toString();
                                     }),
                               )
                             ],
@@ -138,7 +141,17 @@ class FormTallyPage extends GetView<FormTallyController> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                 ),
-                              )
+                              ),
+                              Obx(() {
+                                if (tallyController.isEkorEmpty.value) {
+                                  return const Text(
+                                    "Ekor tidak boleh kosong",
+                                    style: TextStyle(color: Colors.red),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              })
                             ],
                           ),
                         ),
@@ -161,7 +174,17 @@ class FormTallyPage extends GetView<FormTallyController> {
                                           border: OutlineInputBorder(),
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    Obx(() {
+                                      if (tallyController.isBobotEmpty.value) {
+                                        return const Text(
+                                          "Bobot tidak boleh kosong",
+                                          style: TextStyle(color: Colors.red),
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
                                   ],
                                 ),
                               ),
