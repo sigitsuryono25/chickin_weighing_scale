@@ -105,6 +105,6 @@ setFormEdit(FormTallyController tallyController, List<BarangMasukEntity> barang,
   tallyController.ekorController.text = barang[index].ekor.toString();
   tallyController.tanggalProduksiController.text =
       barang[index].tanggalProduksi.toString();
-  tallyController.selectedJenis?.value = barang[index].jenis.toString();
+  tallyController.selectedJenis.value = barang[index].jenis.toString();
   tallyController.on.value = intToBoolean(barang[index].iot);
 }

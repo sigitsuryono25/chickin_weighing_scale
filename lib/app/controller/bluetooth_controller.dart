@@ -1,5 +1,6 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
+import 'package:chickin_weighting_scale/utils/dialog_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
@@ -8,24 +9,30 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class BluetoothController extends BaseController {
   var pd = ProgressDialog(context: Get.context);
-
-  @override
-  void onInit() {
-    super.onInit();
-    checkPermission();
-  }
+  Future<Map<Permission, PermissionStatus>> nearby = [
+    Permission.location,
+    Permission.bluetoothScan,
+    Permission.bluetoothConnect,
+  ].request();
+  List<ScanResult> listResult = List.empty(growable: true);
 
   checkPermission() async {
-    Map<Permission, PermissionStatus> nearby =
-        await [Permission.location, Permission.bluetoothScan].request();
-    for (PermissionStatus s in nearby.values) {
+    var x = await nearby;
+    for (PermissionStatus s in x.values) {
       if (s.isDenied) {
         Get.defaultDialog(
           title: "Peringatan",
-          content: Text("Permission denied for ${nearby.keys}"),
+          content: Text("Permission denied for ${x.keys}"),
           confirm: ElevatedButton(
-            onPressed: () {
-              AppSettings.openAppSettings();
+            onPressed: () async {
+              await flutterBluetooth.turnOn();
+              flutterBluetooth.state.listen((BluetoothState event) {
+                if (event == BluetoothState.on) {
+                  // startScan();
+                } else {
+                  AppSettings.openBluetoothSettings();
+                }
+              });
             },
             child: const Text("Open App Info"),
           ),
@@ -33,13 +40,31 @@ class BluetoothController extends BaseController {
         break;
       }
     }
-    await flutterBluetooth.turnOn();
+    var bluetoothScan = Permission.bluetoothConnect.request();
+    if (await bluetoothScan.isGranted) {
+      if (!await flutterBluetooth.isOn) {
+        DialogHelper.defaultDialogConfirmCancel(
+            title: "Konfirmasi",
+            content: "Nyalakan Bluetotooth",
+            rightActionText: "Nyalakan",
+            rightAction: () async {
+              AppSettings.openBluetoothSettings();
+            },
+            leftAction: () {},
+            leftActionText: "Batalkan");
+      }
+    } else {
+      checkPermission();
+    }
   }
 
-  Stream<List<ScanResult>> startScan() {
+  startScan() {
+    checkPermission();
     flutterBluetooth.startScan(
         scanMode: ScanMode.balanced, timeout: const Duration(seconds: 5));
-    return flutterBluetooth.scanResults;
+    flutterBluetooth.scanResults.listen((event) {
+      listResult = event;
+    });
   }
 
   connectToDevice(BluetoothDevice device) async {

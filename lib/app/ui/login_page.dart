@@ -39,7 +39,7 @@ class LoginPage extends GetView<LoginController> {
               }
             },
             onSubmitAnimationCompleted: () {
-              Get.offAndToNamed(Routes.INITIAL);
+              Get.offAndToNamed(Routes.TASK_LIST);
             },
             passwordValidator: (value) {
               if (value != null) {

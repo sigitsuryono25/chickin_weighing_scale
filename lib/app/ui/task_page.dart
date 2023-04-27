@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chickin_weighting_scale/app/controller/task_controller.dart';
 import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
@@ -13,6 +15,7 @@ import 'partial/table_helper.dart';
 class TaskTimbangPage extends GetView<TaskController> {
   TaskTimbangPage({super.key});
   final globalKeyFab = GlobalKey<ExpandableFabState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +23,7 @@ class TaskTimbangPage extends GetView<TaskController> {
       child: Scaffold(
         appBar: appBar(
             title: "Task Timbang",
-            subtitle: "INBOUND dari UNION ke ABF 1",
+            subtitle: "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
             context: context),
         body: Container(
           color: mobile_chickin_layer_0,
@@ -185,17 +188,16 @@ class TaskTimbangPage extends GetView<TaskController> {
           key: globalKeyFab,
           type: ExpandableFabType.up,
           overlayStyle: ExpandableFabOverlayStyle(
-            color: global_palette_gray_700.withOpacity(0.5)
-          ),
+              color: global_palette_gray_700.withOpacity(0.5)),
           children: [
             FloatingActionButton.extended(
               heroTag: "form-tally",
               onPressed: () {
                 final state = globalKeyFab.currentState;
-                if(state?.isOpen == true){
+                if (state?.isOpen == true) {
                   state?.toggle();
                 }
-                Get.toNamed(Routes.FORM_TALLY);
+                Get.toNamed(Routes.FORM_TALLY, arguments: jsonEncode(controller.itemModel?.toJson()));
               },
               label: const Text("Form Tally"),
               icon: const Icon(Icons.add),
@@ -204,9 +206,10 @@ class TaskTimbangPage extends GetView<TaskController> {
               heroTag: "add-device",
               onPressed: () {
                 final state = globalKeyFab.currentState;
-                if(state?.isOpen == true){
+                if (state?.isOpen == true) {
                   state?.toggle();
                 }
+                Get.toNamed(Routes.BLUETOOTH);
               },
               tooltip: "Add Bluetooth Device",
               label: const Text("Add Device"),
