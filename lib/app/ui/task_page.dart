@@ -14,6 +14,7 @@ import 'partial/table_helper.dart';
 
 class TaskTimbangPage extends GetView<TaskController> {
   TaskTimbangPage({super.key});
+
   final globalKeyFab = GlobalKey<ExpandableFabState>();
 
   @override
@@ -23,7 +24,8 @@ class TaskTimbangPage extends GetView<TaskController> {
       child: Scaffold(
         appBar: appBar(
             title: "Task Timbang",
-            subtitle: "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
+            subtitle:
+                "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
             context: context),
         body: Container(
           color: mobile_chickin_layer_0,
@@ -163,7 +165,18 @@ class TaskTimbangPage extends GetView<TaskController> {
                                           builder: (_, ss) {
                                             if (!ss.hasData) return Container();
                                             final barang = ss.requireData;
-                                            return tableRingkasan(barang);
+                                            if (barang.isEmpty) {
+                                              return const Center(
+                                                child: Text(
+                                                  "Belum ada data",
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 22.0),
+                                                ),
+                                              );
+                                            } else {
+                                              return tableRingkasan(barang);
+                                            }
                                           });
                                     } else {
                                       return Container();
@@ -197,7 +210,8 @@ class TaskTimbangPage extends GetView<TaskController> {
                 if (state?.isOpen == true) {
                   state?.toggle();
                 }
-                Get.toNamed(Routes.FORM_TALLY, arguments: jsonEncode(controller.itemModel?.toJson()));
+                Get.toNamed(Routes.FORM_TALLY,
+                    arguments: jsonEncode(controller.itemModel?.toJson()));
               },
               label: const Text("Form Tally"),
               icon: const Icon(Icons.add),

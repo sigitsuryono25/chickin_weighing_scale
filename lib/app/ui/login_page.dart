@@ -14,7 +14,7 @@ class LoginPage extends GetView<LoginController> {
         builder: (controller) {
           return FlutterLogin(
             logo: const AssetImage('assets/ic_logo_chickin_white.png'),
-            title: "Weighting Scale",
+            title: "Weighing Scale",
             theme: LoginTheme(
               cardTheme: const CardTheme(elevation: 4.0, color: Colors.white),
               primaryColor: global_palette_cblue_500,

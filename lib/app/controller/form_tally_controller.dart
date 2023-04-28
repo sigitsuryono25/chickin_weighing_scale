@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
 import 'package:chickin_weighting_scale/app/data/barang_masuk.dart';
@@ -37,13 +38,18 @@ class FormTallyController extends BaseController {
   TaskItemModel? itemModel;
 
   String? from, to;
+
   void toggle() => on.value = on.value ? false : true;
 
   Future<Stream<List<BarangMasukEntity>>> getSavedData() async {
     await locator.isReady<AppDatabase>();
     var db = locator.get<AppDatabase>();
     _setLastNumber(db);
-    return db.allDao.getAllBarangMasuk();
+    if(itemModel != null) {
+      return db.allDao.getAllBarangMasukByTaskId(itemModel!.id.toInt());
+    }else{
+      return const Stream.empty();
+    }
   }
 
   populateInput() {
@@ -72,6 +78,7 @@ class FormTallyController extends BaseController {
     barangMasuk.jenis = selectedJenis.value.toString();
     barangMasuk.kg = bobotController.text;
     barangMasuk.tanggalProduksi = tanggalProduksiController.text;
+    barangMasuk.idTask = itemModel?.id;
 
     if (!isEdit.value) {
       _addData(barangMasuk);
@@ -89,7 +96,8 @@ class FormTallyController extends BaseController {
         barangMasuk.tanggalProduksi,
         barangMasuk.ekor,
         barangMasuk.kg,
-        barangMasuk.iot);
+        barangMasuk.iot,
+        barangMasuk.idTask);
     var updateData = await db.allDao.updateBarangMasuk(barangEntity);
     if (updateData > 0) {
       Get.snackbar("Info", "Data berhasil diubah");
@@ -115,9 +123,13 @@ class FormTallyController extends BaseController {
   }
 
   _setLastNumber(AppDatabase db) async {
-    var lastNumber = await db.allDao.getCountData();
-    if (lastNumber != null) {
-      noController.text = (lastNumber + 1).toString();
+    if(itemModel != null) {
+      var lastNumber = await db.allDao.getCountDataByTaskId(itemModel!.id);
+      if (lastNumber != null) {
+        noController.text = (lastNumber + 1).toString();
+      }
+    }else{
+      noController.text = 1.toString();
     }
   }
 
@@ -125,12 +137,13 @@ class FormTallyController extends BaseController {
     await locator.isReady<AppDatabase>();
     AppDatabase db = locator.get<AppDatabase>();
     var barangEntity = BarangMasukEntity(
-        barangMasuk.id,
+        Random().nextInt(1000),
         barangMasuk.jenis,
         barangMasuk.tanggalProduksi,
         barangMasuk.ekor,
         barangMasuk.kg,
-        barangMasuk.iot);
+        barangMasuk.iot,
+        barangMasuk.idTask);
     var insert = await db.allDao.insertBarangMasuk(barangEntity);
     // var insertToOdoo = await networkUtil.sendDataIntoOdoo(barangEntity);
     if (insert > 0) {
@@ -156,5 +169,6 @@ class FormTallyController extends BaseController {
     itemModel = TaskItemModel.fromJson(jsonDecode(Get.arguments));
     to = itemModel?.taskName;
     from = itemModel?.from;
+    print(jsonEncode(itemModel?.toJson()));
   }
 }
