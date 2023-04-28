@@ -26,7 +26,11 @@ class TaskController extends BaseController {
   Future<Stream<List<BarangMasukEntity>>> getAllDataBarang() async {
     await locator.isReady<AppDatabase>();
     AppDatabase db = locator.get<AppDatabase>();
-    return db.allDao.getAllBarangMasuk();
+    if(itemModel != null){
+      return db.allDao.getAllBarangMasukByTaskId(itemModel!.id);
+    }else{
+     return const Stream.empty();
+    }
   }
 
   @override

@@ -1,12 +1,16 @@
+import 'dart:math';
+
 class TaskItemModel {
+  int id;
   String? taskName;
   String? date;
   String? type;
   String? from;
 
-  TaskItemModel(this.taskName, this.date, this.type, this.from);
+  TaskItemModel(this.id, this.taskName, this.date, this.type, this.from);
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'taskName': taskName,
         'date': date,
         'type': type,
@@ -14,7 +18,9 @@ class TaskItemModel {
       };
 
   TaskItemModel.fromJson(Map<String, dynamic> json)
-      : taskName = json['taskName'],
+      :
+        id = json['id'],
+        taskName = json['taskName'],
         date = json['date'],
         type = json['type'],
         from = json['from'];

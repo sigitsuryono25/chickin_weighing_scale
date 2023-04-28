@@ -5,6 +5,7 @@ class BarangMasuk {
   String? ekor;
   String? kg;
   int? iot;
+  int? idTask;
 
   BarangMasuk(
       {this.id,
@@ -12,5 +13,6 @@ class BarangMasuk {
       this.tanggalProduksi,
       this.ekor,
       this.kg,
-      this.iot});
+      this.iot,
+      this.idTask});
 }

@@ -30,10 +30,10 @@ DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
             Text(barang[index].jenis.toString()),
           ),
           DataCell(
-            Text(barang[index].ekor.toString()),
+            Text(moneyFormat(barang[index].ekor.toString())),
           ),
           DataCell(
-            Text(barang[index].kg.toString()),
+            Text(moneyFormat(barang[index].kg.toString())),
           ),
         ],
       ),
@@ -72,10 +72,10 @@ DataTable2 tableDetail(
                 Text(barang[index].jenis.toString()),
               ),
               DataCell(
-                Text(barang[index].ekor.toString()),
+                Text(moneyFormat(barang[index].ekor.toString())),
               ),
               DataCell(
-                Text(barang[index].kg.toString()),
+                Text(moneyFormat(barang[index].kg.toString())),
               ),
             ],
             onLongPress: () {

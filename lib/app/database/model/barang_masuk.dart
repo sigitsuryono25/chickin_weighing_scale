@@ -22,11 +22,14 @@ class BarangMasukEntity {
   @ColumnInfo(name: "iot")
   int? iot;
 
+  @ColumnInfo(name: "id_task")
+  int? idTask;
+
   BarangMasukEntity(
-      this.id, this.jenis, this.tanggalProduksi, this.ekor, this.kg, this.iot);
+      this.id, this.jenis, this.tanggalProduksi, this.ekor, this.kg, this.iot, this.idTask);
 
   BarangMasukEntity.noId(
-      {this.jenis, this.tanggalProduksi, this.ekor, this.kg, this.iot});
+      {this.jenis, this.tanggalProduksi, this.ekor, this.kg, this.iot, this.idTask});
 
   Map<String, dynamic> toJson() {
     var mapping = <String, dynamic>{
@@ -35,7 +38,8 @@ class BarangMasukEntity {
       'tanggal_produksi': tanggalProduksi,
       'ekor': ekor,
       'bobot': kg,
-      'iot': iot
+      'iot': iot,
+      'id_task': idTask
     };
     print(jsonEncode(mapping));
     return mapping;

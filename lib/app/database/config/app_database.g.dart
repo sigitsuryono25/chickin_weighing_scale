@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `tb_barang_masuk` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `jenis` TEXT, `tanggal_produksi` TEXT, `ekor` TEXT, `bobot` TEXT, `iot` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `tb_barang_masuk` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `jenis` TEXT, `tanggal_produksi` TEXT, `ekor` TEXT, `bobot` TEXT, `iot` INTEGER, `id_task` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -113,7 +113,8 @@ class _$AllDao extends AllDao {
                   'tanggal_produksi': item.tanggalProduksi,
                   'ekor': item.ekor,
                   'bobot': item.kg,
-                  'iot': item.iot
+                  'iot': item.iot,
+                  'id_task': item.idTask
                 },
             changeListener),
         _barangMasukEntityUpdateAdapter = UpdateAdapter(
@@ -126,7 +127,8 @@ class _$AllDao extends AllDao {
                   'tanggal_produksi': item.tanggalProduksi,
                   'ekor': item.ekor,
                   'bobot': item.kg,
-                  'iot': item.iot
+                  'iot': item.iot,
+                  'id_task': item.idTask
                 },
             changeListener),
         _barangMasukEntityDeletionAdapter = DeletionAdapter(
@@ -139,7 +141,8 @@ class _$AllDao extends AllDao {
                   'tanggal_produksi': item.tanggalProduksi,
                   'ekor': item.ekor,
                   'bobot': item.kg,
-                  'iot': item.iot
+                  'iot': item.iot,
+                  'id_task': item.idTask
                 },
             changeListener);
 
@@ -165,7 +168,25 @@ class _$AllDao extends AllDao {
             row['tanggal_produksi'] as String?,
             row['ekor'] as String?,
             row['bobot'] as String?,
-            row['iot'] as int?),
+            row['iot'] as int?,
+            row['id_task'] as int?),
+        queryableName: 'tb_barang_masuk',
+        isView: false);
+  }
+
+  @override
+  Stream<List<BarangMasukEntity>> getAllBarangMasukByTaskId(int idTask) {
+    return _queryAdapter.queryListStream(
+        'SELECT * FROM tb_barang_masuk WHERE id_task = ?1 ORDER BY id DESC',
+        mapper: (Map<String, Object?> row) => BarangMasukEntity(
+            row['id'] as int?,
+            row['jenis'] as String?,
+            row['tanggal_produksi'] as String?,
+            row['ekor'] as String?,
+            row['bobot'] as String?,
+            row['iot'] as int?,
+            row['id_task'] as int?),
+        arguments: [idTask],
         queryableName: 'tb_barang_masuk',
         isView: false);
   }
@@ -179,7 +200,8 @@ class _$AllDao extends AllDao {
             row['tanggal_produksi'] as String?,
             row['ekor'] as String?,
             row['bobot'] as String?,
-            row['iot'] as int?),
+            row['iot'] as int?,
+            row['id_task'] as int?),
         arguments: [id]);
   }
 
@@ -193,13 +215,22 @@ class _$AllDao extends AllDao {
             row['tanggal_produksi'] as String?,
             row['ekor'] as String?,
             row['bobot'] as String?,
-            row['iot'] as int?));
+            row['iot'] as int?,
+            row['id_task'] as int?));
   }
 
   @override
   Future<int?> getCountData() async {
     return _queryAdapter.query('SELECT COUNT(*) FROM tb_barang_masuk LIMIT 1',
         mapper: (Map<String, Object?> row) => row.values.first as int);
+  }
+
+  @override
+  Future<int?> getCountDataByTaskId(int idTask) async {
+    return _queryAdapter.query(
+        'SELECT COUNT(*) FROM tb_barang_masuk WHERE id_task = ?1 LIMIT 1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [idTask]);
   }
 
   @override
