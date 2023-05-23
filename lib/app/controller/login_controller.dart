@@ -1,19 +1,26 @@
 import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
-import 'package:chickin_weighting_scale/utils/constant.dart';
+import 'package:chickin_weighting_scale/app/data/utils/status.dart';
+import 'package:chickin_weighting_scale/app/network/api_req.dart';
+import 'package:chickin_weighting_scale/app/network/model/login/login_request.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 class LoginController extends BaseController {
-  Future<String?> loginProsess(LoginData data) {
-    return Future.delayed(const Duration(seconds: 5)).then((value) {
-      if (data.name == "adminchickin" && data.password == "chickin123") {
-        sharedPref().then((value) {
-          value.setString(Constant.USERNAME, data.name);
-          value.setString(Constant.NAME, "Sigit Suryono");
-        });
-        return null;
-      } else {
-        return "Username or password not found !";
-      }
-    });
+  Future<String?> processingLogin(LoginData data) async {
+    var req = LoginRequest(
+      params: Params(
+          login: "dikky@chickin.id",
+          password: "dicky161098@",
+          db: "DEVELOPMENT_UPSTREAM_28_02_23"),
+    );
+
+    var result = await ApiRequest.auth(req);
+    if (result is Success) {
+      print(result.data?.jsonrpc);
+      return null;
+    } else if (result is Error) {
+      return "${result.errorData}";
+    } else {
+      return null;
+    }
   }
 }

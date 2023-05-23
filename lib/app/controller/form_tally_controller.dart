@@ -169,6 +169,5 @@ class FormTallyController extends BaseController {
     itemModel = TaskItemModel.fromJson(jsonDecode(Get.arguments));
     to = itemModel?.taskName;
     from = itemModel?.from;
-    print(jsonEncode(itemModel?.toJson()));
   }
 }

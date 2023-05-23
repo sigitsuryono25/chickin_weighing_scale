@@ -25,7 +25,6 @@ abstract class BaseController extends GetxController {
     connectivityResult = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult event) async {
-      print(event);
       if (event != ConnectivityResult.none) {
         var hasInternetAccess = await InternetConnectionChecker().hasConnection;
         if (!hasInternetAccess) {

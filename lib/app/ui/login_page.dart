@@ -27,7 +27,7 @@ class LoginPage extends GetView<LoginController> {
                   color: Colors.white,
                   fontWeight: FontWeight.w500),
             ),
-            onLogin: controller.loginProsess,
+            onLogin: controller.processingLogin,
             messages:
                 LoginMessages(userHint: "Username", passwordHint: "Password"),
             onRecoverPassword: (value) {},

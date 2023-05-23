@@ -4,4 +4,5 @@ class Constant {
   static String USERNAME = "username";
   static String NAME = "name";
   static String LAST_JOB_EXECUTED = "lastJobExecuted";
+  static String SESSION_ID = "session_id";
 }
