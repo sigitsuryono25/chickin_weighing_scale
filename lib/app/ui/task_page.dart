@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:chickin_weighing_scale/app/ui/partial/app_bar.dart';
 import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,20 @@ class TaskTimbangPage extends GetView<TaskController> {
     return SafeArea(
       top: true,
       child: Scaffold(
-        appBar: appBar(
-            title: "Task Timbang",
-            subtitle:
-                "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
-            context: context),
+        appBar: appBarWithSubtitleLeftRightIcon(
+          title: "Task Timbang",
+          subtitle:
+              "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
+          context: context,
+          rightIcon: Obx(
+            () => Icon(controller.icons.value,
+                color: controller.iconColors.value),
+          ),
+        ),
         body: Container(
           color: mobile_chickin_layer_0,
           child: SingleChildScrollView(
+            controller: controller.hideButtonController,
             child: Column(
               children: [
                 Padding(
@@ -169,7 +176,8 @@ class TaskTimbangPage extends GetView<TaskController> {
                                                 child: Text(
                                                   "Belum ada data",
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 22.0),
                                                 ),
                                               );
@@ -181,6 +189,19 @@ class TaskTimbangPage extends GetView<TaskController> {
                                       return Container();
                                     }
                                   },
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    ;
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: buttonColor,
+                                  ),
+                                  child: const Text("Submit Data",
+                                      style: TextStyle(color: black)),
                                 ),
                               )
                             ],
@@ -195,40 +216,45 @@ class TaskTimbangPage extends GetView<TaskController> {
           ),
         ),
         floatingActionButtonLocation: ExpandableFab.location,
-        floatingActionButton: ExpandableFab(
-          child: const Icon(Icons.play_arrow_rounded),
-          key: globalKeyFab,
-          type: ExpandableFabType.up,
-          overlayStyle: ExpandableFabOverlayStyle(
-              color: global_palette_gray_700.withOpacity(0.5)),
-          children: [
-            FloatingActionButton.extended(
-              heroTag: "form-tally",
-              onPressed: () {
-                final state = globalKeyFab.currentState;
-                if (state?.isOpen == true) {
-                  state?.toggle();
-                }
-                Get.toNamed(Routes.FORM_TALLY,
-                    arguments: jsonEncode(controller.itemModel?.toJson()));
-              },
-              label: const Text("Form Tally"),
-              icon: const Icon(Icons.add),
+        floatingActionButton: Obx(()=>
+          Visibility(
+            visible: controller.isVisible.value,
+            child: ExpandableFab(
+              child: const Icon(Icons.play_arrow_rounded),
+              key: globalKeyFab,
+              type: ExpandableFabType.up,
+              overlayStyle: ExpandableFabOverlayStyle(
+                  color: global_palette_gray_700.withOpacity(0.5)),
+              children: [
+                FloatingActionButton.extended(
+                  heroTag: "form-tally",
+                  onPressed: () {
+                    final state = globalKeyFab.currentState;
+                    if (state?.isOpen == true) {
+                      state?.toggle();
+                    }
+                    Get.toNamed(Routes.FORM_TALLY,
+                        arguments: jsonEncode(controller.itemModel?.toJson()));
+                  },
+                  label: const Text("Form Tally"),
+                  icon: const Icon(Icons.add),
+                ),
+                FloatingActionButton.extended(
+                  heroTag: "add-device",
+                  onPressed: () {
+                    final state = globalKeyFab.currentState;
+                    if (state?.isOpen == true) {
+                      state?.toggle();
+                    }
+                    Get.toNamed(Routes.BLUETOOTH);
+                  },
+                  tooltip: "Add Bluetooth Device",
+                  label: const Text("Add Device"),
+                  icon: const Icon(Icons.search),
+                ),
+              ],
             ),
-            FloatingActionButton.extended(
-              heroTag: "add-device",
-              onPressed: () {
-                final state = globalKeyFab.currentState;
-                if (state?.isOpen == true) {
-                  state?.toggle();
-                }
-                Get.toNamed(Routes.BLUETOOTH);
-              },
-              tooltip: "Add Bluetooth Device",
-              label: const Text("Add Device"),
-              icon: const Icon(Icons.search),
-            ),
-          ],
+          ),
         ),
       ),
     );

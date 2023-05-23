@@ -11,7 +11,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="Chickin Weighing Scale">
+        android:label="${appName}">
         <activity
             android:name="com.chickinapps.weighing.scale.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

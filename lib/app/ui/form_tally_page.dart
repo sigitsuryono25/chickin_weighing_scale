@@ -17,10 +17,15 @@ class FormTallyPage extends GetView<FormTallyController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(
-            title: "Form Tally",
-            subtitle: "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
-            context: context),
+        appBar: appBarWithSubtitleLeftRightIcon(
+          title: "Task Timbang",
+          subtitle:
+          "${controller.itemModel?.type} dari ${controller.itemModel?.from} ke ${controller.itemModel?.taskName}",
+          context: context,
+          rightIcon: Obx(
+                () => Icon(controller.icons.value, color: controller.iconColors.value),
+          ),
+        ),
         body: SingleChildScrollView(
           child: GetBuilder<FormTallyController>(
             builder: (tallyController) {
