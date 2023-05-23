@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:chickin_weighting_scale/app/helper/logging.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'logging.dart';
 
 class FileHelper {
   Future<String?> get _localPath async {

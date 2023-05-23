@@ -1,7 +1,8 @@
-import 'package:chickin_weighting_scale/app/controller/splash_controller.dart';
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
+import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+
+import '../controller/splash_controller.dart';
 
 class SplashPage extends GetView<SplashController> {
   @override

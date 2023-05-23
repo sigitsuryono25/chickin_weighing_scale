@@ -1,5 +1,6 @@
-import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
 import 'package:floor/floor.dart';
+
+import '../model/barang_masuk.dart';
 
 @dao
 abstract class AllDao {

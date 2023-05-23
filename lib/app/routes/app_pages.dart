@@ -1,16 +1,17 @@
-import 'package:chickin_weighting_scale/app/bindings/bluetooth_binding.dart';
-import 'package:chickin_weighting_scale/app/bindings/form_tally_binding.dart';
-import 'package:chickin_weighting_scale/app/bindings/login_binding.dart';
-import 'package:chickin_weighting_scale/app/bindings/splash_binding.dart';
-import 'package:chickin_weighting_scale/app/bindings/task_binding.dart';
-import 'package:chickin_weighting_scale/app/bindings/task_list_binding.dart';
-import 'package:chickin_weighting_scale/app/ui/bluetooth_page.dart';
-import 'package:chickin_weighting_scale/app/ui/form_tally_page.dart';
-import 'package:chickin_weighting_scale/app/ui/login_page.dart';
-import 'package:chickin_weighting_scale/app/ui/splash_page.dart';
-import 'package:chickin_weighting_scale/app/ui/task_list_page.dart';
-import 'package:chickin_weighting_scale/app/ui/task_page.dart';
 import 'package:get/get.dart';
+
+import '../bindings/bluetooth_binding.dart';
+import '../bindings/form_tally_binding.dart';
+import '../bindings/login_binding.dart';
+import '../bindings/splash_binding.dart';
+import '../bindings/task_binding.dart';
+import '../bindings/task_list_binding.dart';
+import '../ui/bluetooth_page.dart';
+import '../ui/form_tally_page.dart';
+import '../ui/login_page.dart';
+import '../ui/splash_page.dart';
+import '../ui/task_list_page.dart';
+import '../ui/task_page.dart';
 
 part './app_routes.dart';
 
@@ -48,8 +49,9 @@ class AppPages {
       binding: BluetoothBinding(),
     ),
     GetPage(
-        name: Routes.TASK_LIST,
-        page: () => TaskListPage(),
-        binding: TaskListBinding())
+      name: Routes.TASK_LIST,
+      page: () => TaskListPage(),
+      binding: TaskListBinding(),
+    )
   ];
 }

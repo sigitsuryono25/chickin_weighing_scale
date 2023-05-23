@@ -1,13 +1,13 @@
 import 'dart:async';
-
-import 'package:chickin_weighting_scale/app/helper/locator.dart';
-import 'package:chickin_weighting_scale/app/network/network.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/source/remote/network/network.dart';
+import '../di/app_module.dart';
 
 abstract class BaseController extends GetxController {
   var networkUtil = locator.get<NetworkUtil>();

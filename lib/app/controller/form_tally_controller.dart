@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:math';
-
-import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
-import 'package:chickin_weighting_scale/app/data/barang_masuk.dart';
-import 'package:chickin_weighting_scale/app/database/config/app_database.dart';
-import 'package:chickin_weighting_scale/app/network/model/task_item_model.dart';
-import 'package:chickin_weighting_scale/utils/constant.dart';
-import 'package:chickin_weighting_scale/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../database/model/barang_masuk.dart';
-import '../helper/locator.dart';
+import '../../utils/constant.dart';
+import '../../utils/utils.dart';
+import '../data/barang_masuk.dart';
+import '../data/source/local/database/config/app_database.dart';
+import '../data/source/local/database/model/barang_masuk.dart';
+import '../data/source/remote/network/model/task_item_model.dart';
+import '../di/app_module.dart';
+import 'base_controller.dart';
 
 class FormTallyController extends BaseController {
   List<BarangMasuk> listBarangMasuk = List<BarangMasuk>.empty(growable: true);

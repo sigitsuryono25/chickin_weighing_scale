@@ -1,13 +1,12 @@
 import 'dart:convert';
-
-import 'package:chickin_weighting_scale/app/controller/task_list_controller.dart';
-import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
-import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
+import 'package:chickin_weighing_scale/app/ui/partial/app_bar.dart';
+import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 
-import '../theme/app_color.dart';
+import '../controller/task_list_controller.dart';
+import '../routes/app_pages.dart';
 
 class TaskListPage extends GetView<TaskListController> {
   final globalKeyFab = GlobalKey<ExpandableFabState>();

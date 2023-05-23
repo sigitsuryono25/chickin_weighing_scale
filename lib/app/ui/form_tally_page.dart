@@ -1,12 +1,12 @@
-import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
-import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
-import 'package:chickin_weighting_scale/utils/constant.dart';
+import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utils/constant.dart';
 import '../../utils/utils.dart';
+import '../controller/form_tally_controller.dart';
+import '../data/source/local/database/model/barang_masuk.dart';
 import 'partial/app_bar.dart';
 import 'partial/table_helper.dart';
 

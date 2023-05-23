@@ -1,15 +1,14 @@
 import 'dart:convert';
-
-import 'package:chickin_weighting_scale/app/controller/task_controller.dart';
-import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
-import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
-import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
+import 'package:chickin_weighing_scale/app/ui/partial/app_bar.dart';
+import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
+import '../controller/task_controller.dart';
+import '../data/source/local/database/model/barang_masuk.dart';
+import '../routes/app_pages.dart';
 import 'partial/table_helper.dart';
 
 class TaskTimbangPage extends GetView<TaskController> {

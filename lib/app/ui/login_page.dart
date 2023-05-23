@@ -1,10 +1,10 @@
-import 'package:chickin_weighting_scale/app/controller/login_controller.dart';
-import 'package:chickin_weighting_scale/app/routes/app_pages.dart';
+import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:get/get.dart';
 
-import '../theme/app_color.dart';
+import '../controller/login_controller.dart';
+import '../routes/app_pages.dart';
 
 class LoginPage extends GetView<LoginController> {
   @override
