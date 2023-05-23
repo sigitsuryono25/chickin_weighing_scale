@@ -58,8 +58,23 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            minifyEnabled true
+            multiDexEnabled true
+        }
+        debug {
+            multiDexEnabled true
         }
     }
+
+    flavorDimensions "default"
+    productFlavors{
+        staging {
+            applicationIdSuffix ".staging"
+            manifestPlaceholders= [appName: "[Staging] Chickin Weighing Scale"]
+            multiDexEnabled true
+        }
+    }
+
 }
 
 flutter {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:chickin_weighing_scale/app/ui/partial/app_bar.dart';
 import 'package:chickin_weighing_scale/app/ui/theme/app_color.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,12 @@ import '../routes/app_pages.dart';
 
 class TaskListPage extends GetView<TaskListController> {
   final globalKeyFab = GlobalKey<ExpandableFabState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(title: "Task List", subtitle: null, context: context),
+        appBar: customAppBar("Task List"),
         body: Container(
           color: mobile_chickin_layer_0,
           child: GetBuilder<TaskListController>(builder: (controller) {
@@ -58,8 +60,7 @@ class TaskListPage extends GetView<TaskListController> {
             ),
             FloatingActionButton.extended(
               heroTag: "sort",
-              onPressed: () {
-              },
+              onPressed: () {},
               tooltip: "Sort data by something",
               label: const Text("Sort"),
               icon: const Icon(Icons.sort),

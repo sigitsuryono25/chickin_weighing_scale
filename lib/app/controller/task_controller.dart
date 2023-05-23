@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+
+import 'package:chickin_weighing_scale/utils/helper/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,14 +22,16 @@ class TaskController extends BaseController {
   final TextEditingController suhu = TextEditingController(text: "-1");
   final TextEditingController noSegel = TextEditingController(text: "206");
   TaskItemModel? itemModel;
+  var icons = Icons.sync.obs;
+  var iconColors = Colors.black54.obs;
 
   Future<Stream<List<BarangMasukEntity>>> getAllDataBarang() async {
     await locator.isReady<AppDatabase>();
     AppDatabase db = locator.get<AppDatabase>();
-    if(itemModel != null){
+    if (itemModel != null) {
       return db.allDao.getAllBarangMasukByTaskId(itemModel!.id);
-    }else{
-     return const Stream.empty();
+    } else {
+      return const Stream.empty();
     }
   }
 
@@ -36,5 +39,11 @@ class TaskController extends BaseController {
   void onInit() {
     super.onInit();
     itemModel = TaskItemModel.fromJson(jsonDecode(Get.arguments));
+    scrollListener();
+    loggingError(message: "$isVisible");
+    Future.delayed(const Duration(seconds: 3), () {
+      icons.value = Icons.check_circle_rounded;
+      iconColors.value = Colors.green;
+    });
   }
 }

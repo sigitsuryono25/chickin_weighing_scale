@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 import '../app/ui/theme/app_color.dart';
 
 class DialogHelper {
   static defaultDialogSingleAction(
-      String title, String content, String actionText, VoidCallback? action) {
+      {required String title, required String content, required String actionText, VoidCallback? action}) {
     if (Get.isDialogOpen == true) {
       Get.close(0);
     }
     Get.defaultDialog(
       title: title,
-      content: Text(content),
+      content: Html(data: content),
       confirm: TextButton(
         onPressed: () => action?.call(),
         child: Text(actionText),

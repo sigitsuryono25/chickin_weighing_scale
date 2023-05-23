@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utils/constant.dart';
@@ -35,7 +36,8 @@ class FormTallyController extends BaseController {
   RxBool isBobotEmpty = RxBool(false);
   RxBool isEkorEmpty = RxBool(false);
   TaskItemModel? itemModel;
-
+  var icons = Icons.sync.obs;
+  var iconColors = Colors.black54.obs;
   String? from, to;
 
   void toggle() => on.value = on.value ? false : true;
@@ -168,5 +170,9 @@ class FormTallyController extends BaseController {
     itemModel = TaskItemModel.fromJson(jsonDecode(Get.arguments));
     to = itemModel?.taskName;
     from = itemModel?.from;
+    Future.delayed(const Duration(seconds: 3), () {
+      icons.value = Icons.check_circle_rounded;
+      iconColors.value = Colors.green;
+    });
   }
 }
