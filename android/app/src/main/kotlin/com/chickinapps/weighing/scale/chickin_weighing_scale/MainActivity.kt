@@ -1,4 +1,4 @@
-package com.chickinapps.weighting.scale
+package com.chickinapps.weighing.scale
 
 import io.flutter.embedding.android.FlutterActivity
 

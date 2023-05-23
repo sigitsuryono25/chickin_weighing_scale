@@ -1,15 +1,15 @@
-import 'package:chickin_weighting_scale/app/helper/file_helper.dart';
-import 'package:chickin_weighting_scale/app/helper/locator.dart';
-import 'package:chickin_weighting_scale/app/helper/logging.dart';
-import 'package:chickin_weighting_scale/app/helper/workmanager.dart';
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
-import 'package:chickin_weighting_scale/app/theme/app_theme.dart';
+import 'package:chickin_weighing_scale/app/di/app_module.dart';
+import 'package:chickin_weighing_scale/utils/helper/file_helper.dart';
+import 'package:chickin_weighing_scale/utils/helper/logging.dart';
+import 'package:chickin_weighing_scale/utils/helper/workmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'app/routes/app_pages.dart';
+import 'app/ui/theme/app_color.dart';
+import 'app/ui/theme/app_theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

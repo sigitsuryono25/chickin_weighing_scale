@@ -1,11 +1,12 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
-import 'package:chickin_weighting_scale/utils/dialog_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+
+import '../../utils/dialog_helper.dart';
+import 'base_controller.dart';
 
 class BluetoothController extends BaseController {
   var pd = ProgressDialog(context: Get.context);

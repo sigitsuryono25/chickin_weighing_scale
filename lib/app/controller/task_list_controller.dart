@@ -1,5 +1,5 @@
-import 'package:chickin_weighting_scale/app/controller/base_controller.dart';
-import 'package:chickin_weighting_scale/app/network/model/task_item_model.dart';
+import '../data/source/remote/network/model/task_item_model.dart';
+import 'base_controller.dart';
 
 class TaskListController extends BaseController{
   List<TaskItemModel> itemTask = [

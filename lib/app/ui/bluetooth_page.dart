@@ -1,7 +1,8 @@
-import 'package:chickin_weighting_scale/app/controller/bluetooth_controller.dart';
-import 'package:chickin_weighting_scale/app/ui/partial/app_bar.dart';
+import 'package:chickin_weighing_scale/app/ui/partial/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controller/bluetooth_controller.dart';
 
 class BluetoothPage extends GetView<BluetoothController> {
   @override

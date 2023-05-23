@@ -1,5 +1,6 @@
-import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
 import 'package:get/get.dart';
+
+import '../controller/form_tally_controller.dart';
 
 class FormTallyBinding extends Bindings {
   @override

@@ -1,5 +1,6 @@
-import 'package:chickin_weighting_scale/app/controller/task_controller.dart';
 import 'package:get/get.dart';
+
+import '../controller/task_controller.dart';
 
 class TaskBinding extends Bindings {
   @override

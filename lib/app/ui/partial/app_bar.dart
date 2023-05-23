@@ -1,5 +1,6 @@
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:flutter/material.dart';
+
+import '../theme/app_color.dart';
 
 AppBar appBar(
     {required String title, String? subtitle, required BuildContext context}) {

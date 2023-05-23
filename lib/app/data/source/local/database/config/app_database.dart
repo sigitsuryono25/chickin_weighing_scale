@@ -1,10 +1,10 @@
 import 'dart:async';
-
-import 'package:chickin_weighting_scale/app/database/dao/all_dao.dart';
-import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
-import 'package:chickin_weighting_scale/utils/constant.dart';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
+
+import '../../../../../../utils/constant.dart';
+import '../dao/all_dao.dart';
+import '../model/barang_masuk.dart';
 
 part 'app_database.g.dart';
 

@@ -1,6 +1,7 @@
-import 'package:chickin_weighting_scale/app/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../app/ui/theme/app_color.dart';
 
 class DialogHelper {
   static defaultDialogSingleAction(

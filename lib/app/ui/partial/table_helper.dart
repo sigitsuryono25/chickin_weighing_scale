@@ -1,9 +1,10 @@
-import 'package:chickin_weighting_scale/app/controller/form_tally_controller.dart';
-import 'package:chickin_weighting_scale/app/database/model/barang_masuk.dart';
-import 'package:chickin_weighting_scale/utils/dialog_helper.dart';
-import 'package:chickin_weighting_scale/utils/utils.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/dialog_helper.dart';
+import '../../../utils/utils.dart';
+import '../../controller/form_tally_controller.dart';
+import '../../data/source/local/database/model/barang_masuk.dart';
 
 DataTable2 tableRingkasan(List<BarangMasukEntity> barang) {
   return DataTable2(
