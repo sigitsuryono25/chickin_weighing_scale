@@ -1,4 +1,4 @@
-# Chickin Iot Weighing Scale
+# Iot Weighing Scale (Ongoing)
 
 Integrasi Timbangan Bluetooth dengan Flutter
 
