@@ -16,9 +16,9 @@ class LoginController extends BaseController with StateMixin {
   Future<String?> processingLogin(LoginData data) async  {
     var req = LoginRequest(
       params: Params(
-          login: "dikky@chickin.id", //
-          password: "dicky161098@", //
-          db: "DEVELOPMENT_UPSTREAM_28_02_23"),
+          login: "your_email@chickin.id", //
+          password: "password", //
+          db: "selected_db"),
     );
 
     var data = await _authProvider.doAuth(req);
