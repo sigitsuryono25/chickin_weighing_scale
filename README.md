@@ -1,16 +1,24 @@
-# chickin_weighting_scale
+# Chickin Iot Weighing Scale
 
-Chickin Weighting Scale
+Integrasi Timbangan Bluetooth dengan Flutter
 
-## Getting Started
+## Dependencies yang dipakai
+- GetX
+- Floor
+- Shared preferences
+- Flutter Login
+- Flutter Datetime Picker
+- Data Table 2
+- Dropdown Button 2
+- Flutter Expandable FAB
+- Flutter Blue Pulus
+- Permission Handler
+- App Settings
+- Connectivity Plus
+- Dio
+- Logger
+- Path Provider
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Dev Dependencies yang dipakai
+- Floor Generator
+- Build Runner
